@@ -12,53 +12,51 @@ import io
 import os
 import steamapi
 from tkinter import *
-
-''' e.g. "gobbo18uk" ''' 
-steamId = ""
-
-''' ------------------------------------------------------------------------------------------------ '''
-def main():
-    cwd = os.getcwd()
-    print ("Current working directory: " + cwd)
+ 
+class SteamYear(Tk):
     
-    buildGui()
-    
-''' ------------------------------------------------------------------------------------------------ '''
-def buildGui():
-    top = Tk()
-    frame = Frame(top)
-    frame.pack()
-    
-    bottomframe = Frame(top)
-    bottomframe.pack(side=BOTTOM)    
-    
-    label = Label(frame, text="User Name")
-    label.pack(side=LEFT)
-    
-    entry = Entry(frame, textvariable=steamId)    
-    entry.pack(side=RIGHT)
-    
-    button = Button(bottomframe, text="Go", command=doCoolStuff)
-    button.pack(side=BOTTOM)
-    
-    top.mainloop()
-
-''' ------------------------------------------------------------------------------------------------ '''
-def doCoolStuff():
-    with open('steam-api-key.conf', 'r') as myfile:
-        steamApiKey = myfile.read().replace('\n', '')
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def __init__(self):
+        Tk.__init__(self)
         
-    steamapi.core.APIConnection(api_key=steamApiKey, validate_key=True)
-    steam_user = steamapi.user.SteamUser(userurl=steamId)
-    content = "Your real name is {0}. You have {1} friends and {2} games.".format(steam_user.real_name, len(steam_user.friends), len(steam_user.games))
+        cwd = os.getcwd()
+        print ("Current working directory: " + cwd)
         
-    print (content)
+        self.buildGui()
+        
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def buildGui(self):
+        self.frame = Frame(self)
+        self.frame.pack()
+        
+        self.bottomframe = Frame(self)
+        self.bottomframe.pack(side=BOTTOM)    
+        
+        self.label = Label(self.frame, text="User Name")
+        self.label.pack(side=LEFT)
+        
+        self.entry = Entry(self.frame)    
+        self.entry.pack(side=RIGHT)
+        
+        self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff)
+        self.button.pack(side=BOTTOM)
     
-    print ("You recently played:")
-    for game in steam_user.recently_played:
-        print ("  " + game.name)    
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def doCoolStuff(self):
+        with open('steam-api-key.conf', 'r') as myfile:
+            steamApiKey = myfile.read().replace('\n', '')
+            
+        steamapi.core.APIConnection(api_key=steamApiKey, validate_key=True)
+        steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
+        content = "Your real name is {0}. You have {1} friends and {2} games.".format(steam_user.real_name, len(steam_user.friends), len(steam_user.games))
+            
+        print (content)
+        
+        print ("You recently played:")
+        for game in steam_user.recently_played:
+            print ("  " + game.name)    
 
 ''' ------------------------------------------------------------------------------------------------ '''
-if __name__ == '__main__':
-    main()
+app = SteamYear()
+app.mainloop()
     
