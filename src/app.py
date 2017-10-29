@@ -11,6 +11,7 @@ Uses the steamapi Python library at https://github.com/smiley/steamapi.
 import io
 import os
 import steamapi
+import math
 from tkinter import *
  
 class SteamYear(Tk):
@@ -35,7 +36,7 @@ class SteamYear(Tk):
         self.label = Label(self.frame, text="User Name")
         self.label.pack(side=LEFT)
         
-        self.entry = Entry(self.frame)    
+        self.entry = Entry(self.frame)
         self.entry.pack(side=RIGHT)
         
         self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff)
@@ -49,12 +50,20 @@ class SteamYear(Tk):
         steamapi.core.APIConnection(api_key=steamApiKey, validate_key=True)
         steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
         content = "Your real name is {0}. You have {1} friends and {2} games.".format(steam_user.real_name, len(steam_user.friends), len(steam_user.games))
-            
+        
+        print ("")    
         print (content)
         
+        print ("")
         print ("You recently played:")
         for game in steam_user.recently_played:
-            print ("  " + game.name)    
+            print ("  " + game.name)
+        
+        print ("")    
+        print ("Your collection:")        
+        for game in sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True):
+            total_hours_played = math.ceil(game.playtime_forever / 60)
+            print ("  {0}, total play time: {1}".format(game.name, total_hours_played))
 
 ''' ------------------------------------------------------------------------------------------------ '''
 app = SteamYear()
