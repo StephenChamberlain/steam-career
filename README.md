@@ -6,5 +6,6 @@ Experimental Python application to use Steam Web API to retrieve player data for
 - Python (3.6.3).
 
 ## Components
-- Uses [https://github.com/smiley/steamapi](https://github.com/smiley/steamapi).
-- Tkinter UI.
+- [https://github.com/smiley/steamapi](https://github.com/smiley/steamapi).
+- Tkinter (UI).
+- Jinja2 (templating engine).  

@@ -12,7 +12,9 @@ import io
 import os
 import steamapi
 import math
+
 from tkinter import *
+from jinja2 import Template, Environment, PackageLoader, select_autoescape
  
 class SteamCareer(Tk):
     
@@ -52,6 +54,7 @@ class SteamCareer(Tk):
         steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
 
         self.printSteamDataToConsole(steam_user)
+        self.generateResultPage(steam_user)
 
     ''' ------------------------------------------------------------------------------------------------ '''
     def printSteamDataToConsole(self, steam_user):
@@ -70,6 +73,22 @@ class SteamCareer(Tk):
         for game in sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True):
             total_hours_played = math.ceil(game.playtime_forever / 60)
             print ("  {0}, total play time: {1}".format(game.name, total_hours_played))
+
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def generateResultPage(self, steam_user):
+        env = Environment(
+            loader=PackageLoader('templates', 'templates'),
+            autoescape=select_autoescape(['html', 'xml'])
+        )
+        
+        template = env.get_template('career.html')        
+        games = sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True)
+        result = template.render(
+            my_string=steam_user.real_name, 
+            games=games)
+        
+        with open("test.html", "wb") as f:
+            f.write(result.encode("UTF-8"))        
             
 ''' ------------------------------------------------------------------------------------------------ '''
 app = SteamCareer()
