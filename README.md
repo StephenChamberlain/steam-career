@@ -1,5 +1,5 @@
-# Steam Year
-Experimental Python application to use Steam Web API to retrieve player data for the current year and do something cool with it...
+# Steam Career
+Experimental Python application to use Steam Web API to retrieve player data for their entire time on steam and do something cool with it...
 
 ## Components
 - Python

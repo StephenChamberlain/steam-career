@@ -14,7 +14,7 @@ import steamapi
 import math
 from tkinter import *
  
-class SteamYear(Tk):
+class SteamCareer(Tk):
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
@@ -37,6 +37,7 @@ class SteamYear(Tk):
         self.label.pack(side=LEFT)
         
         self.entry = Entry(self.frame)
+        self.entry.insert(END, 'gobbo18uk')    
         self.entry.pack(side=RIGHT)
         
         self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff)
@@ -66,6 +67,6 @@ class SteamYear(Tk):
             print ("  {0}, total play time: {1}".format(game.name, total_hours_played))
 
 ''' ------------------------------------------------------------------------------------------------ '''
-app = SteamYear()
+app = SteamCareer()
 app.mainloop()
     
