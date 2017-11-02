@@ -1,3 +1,5 @@
+__author__ = 'Stephen Chamberlain'
+
 '''
 Created on 28 Oct 2017
 
@@ -8,10 +10,7 @@ Uses the steamapi Python library at https://github.com/smiley/steamapi.
 @author: Stephen Chamberlain
 '''
 
-import io
-import os
-import steamapi
-import math
+import io, subprocess, os, steamapi, math, datetime
 
 from tkinter import *
 from jinja2 import Template, Environment, PackageLoader, select_autoescape
@@ -53,7 +52,7 @@ class SteamCareer(Tk):
         steamapi.core.APIConnection(api_key=steamApiKey, validate_key=True)
         steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
 
-        self.printSteamDataToConsole(steam_user)
+#         self.printSteamDataToConsole(steam_user)
         self.generateResultPage(steam_user)
 
     ''' ------------------------------------------------------------------------------------------------ '''
@@ -76,6 +75,9 @@ class SteamCareer(Tk):
 
     ''' ------------------------------------------------------------------------------------------------ '''
     def generateResultPage(self, steam_user):
+        print ("")    
+        print ("Generating results page...")        
+        
         env = Environment(
             loader=PackageLoader('templates', 'templates'),
             autoescape=select_autoescape(['html', 'xml'])
@@ -83,12 +85,35 @@ class SteamCareer(Tk):
         
         template = env.get_template('career.html')        
         games = sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True)
-        result = template.render(
-            my_string=steam_user.real_name, 
-            games=games)
         
-        with open("test.html", "wb") as f:
-            f.write(result.encode("UTF-8"))        
+        total_hours_played = 0
+        nr_actually_played_games = 0
+        for game in games:
+            if game.playtime_forever > 0:
+                total_hours_played += game.playtime_forever
+                nr_actually_played_games += 1            
+        
+        total_hours_played = total_hours_played / 60;
+        
+        timestamp = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
+        
+        resultPath = "result.html" 
+        with open(resultPath, "wb") as f:
+            result = template.render(
+                user=steam_user, 
+                games=games, 
+                total_hours_played=total_hours_played, 
+                nr_actually_played_games=nr_actually_played_games,
+                timestamp=timestamp)         
+            
+            f.write(result.encode("UTF-8")) 
+            
+        if sys.platform.startswith('darwin'):
+            subprocess.call(('open', resultPath))
+        elif os.name == 'nt':
+            os.startfile(resultPath)
+        elif os.name == 'posix':
+            subprocess.call(('xdg-open', resultPath))
             
 ''' ------------------------------------------------------------------------------------------------ '''
 app = SteamCareer()
