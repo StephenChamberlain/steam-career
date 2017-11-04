@@ -102,3 +102,4 @@ ENV/
 steam-api-key.conf
 result.html
 .idea/
+result-pages/

@@ -97,7 +97,8 @@ class SteamCareer(Tk):
         
         timestamp = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
         
-        resultPath = "result.html" 
+        resultPath = "result-pages\\" + steam_user.name + ".html"        
+        os.makedirs(os.path.dirname(resultPath), exist_ok=True)         
         with open(resultPath, "wb") as f:
             result = template.render(
                 user=steam_user, 
