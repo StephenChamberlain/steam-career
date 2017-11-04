@@ -1,50 +1,67 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Steam Career</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style type="text/css">
-      .panel-heading {
-		background-color: #171A21;
-		color: #C4C1BF;
-		text-align: center;
-		vertical-align: middle;
-      }
-      .body {
-		background-color: #1B2838;
-		color: #98B8CB;
-      }
-      .container {      	
-        max-width: 500px;
-        padding-top: 100px;
-      }
-      .hours {
-		color: #42AEF4;      
-      }      
-    </style>
-  </head>
-  <body class="body">
-  	<div class="panel-heading">
-  		<p>
-  			<img src="{{user.avatar_medium}}"/>
-  			{{user.name.upper()}}'S STEAM CAREER
-  		</p>
-  		<p>
-  			Generated {{timestamp}}
-  		</p>
-  	</div>
-    <div class="container">
-      <p>{{(total_hours_played) | abs | int}} hours spent playing {{nr_actually_played_games}} games out of a collection of {{games | length}} games</p>
-      <p>Your most played games:</p>
-      <ul>
-        {% for game in games %}
-        <li>
-        	{{game.logo_url}} {{game.name | replace("™","&trade;" | safe)}} 
-        	<span class="hours">({{(game.playtime_forever / 60) | abs | int}} hours)</span>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </body>
+<head>
+<title>Steam Career</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+	rel="stylesheet" media="screen">
+<style type="text/css">
+
+.panel-heading {
+	background-color: #171A21;
+	color: #C4C1BF;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.body {
+	background-color: #1B2838;
+	color: #98B8CB;
+}
+
+.container {
+	max-width: 600px;
+	padding-top: 50px;
+}
+
+.hours {
+	color: #42AEF4;
+}
+
+.never-played {
+	color: #20476F;
+}
+</style>
+</head>
+<body class="body">
+	<div class="panel-heading">
+		<p>
+			<img src="{{user.avatar_medium}}" /> {{user.name.upper()}}'S STEAM CAREER
+		</p>
+		<p>Generated {{timestamp}}</p>
+	</div>
+	<div class="container">
+		<p>{{(total_hours_played) | abs | int}} hours spent playing {{nr_actually_played_games}} games out of a collection of {{games | length}} games</p>
+		<p>
+			<ul>
+				{% for game in games %} 
+					{% if loop.index == 1 %}
+						<li><img src="http://media.steampowered.com/steamcommunity/public/images/apps/{{game.appid}}/{{game.img_logo_url}}.jpg"/><h1>Most played game: {{game.name | replace("™","&trade;" | safe)}} <span class="hours">({{(game.playtime_forever / 60) | abs | int}} hours)</span></h1></li>
+					{% elif loop.index == 2 %}
+						<li><img src="http://media.steampowered.com/steamcommunity/public/images/apps/{{game.appid}}/{{game.img_logo_url}}.jpg"/><h2>Second most played game: {{game.name | replace("™","&trade;" | safe)}} <span class="hours">({{(game.playtime_forever / 60) | abs | int}} hours)</span></h2></li>
+					{% elif loop.index == 3 %}
+						<li><img src="http://media.steampowered.com/steamcommunity/public/images/apps/{{game.appid}}/{{game.img_logo_url}}.jpg"/><h3>Third most played game: {{game.name | replace("™","&trade;" | safe)}} <span class="hours">({{(game.playtime_forever / 60) | abs | int}} hours)</span></h3></li>						
+					{% elif (game.playtime_forever / 60) > 1 %}
+						<li>{{game.logo_url}} {{game.name | replace("™","&trade;" | safe)}} <span class="hours">({{(game.playtime_forever / 60) | abs | int}} hours)</span></li>
+					{% elif game.playtime_forever > 1 %}
+						<li>{{game.logo_url}} {{game.name | replace("™","&trade;" | safe)}} <span class="hours">({{game.playtime_forever | abs | int}} minutes)</span></li>
+					{% else %}
+						<li class="never-played">{{game.logo_url}} {{game.name | replace("™","&trade;" | safe)}} (never played)</li> 
+					{% endif %} 
+				{% endfor %}
+			</ul>
+		</p>
+	</div>
+</body>
 </html>
