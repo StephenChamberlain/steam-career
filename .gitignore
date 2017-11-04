@@ -101,3 +101,4 @@ ENV/
 .mypy_cache/
 steam-api-key.conf
 result.html
+.idea/
