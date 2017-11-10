@@ -14,8 +14,11 @@ import io, subprocess, os, steamapi, math, datetime
 
 from tkinter import *
 from jinja2 import Template, Environment, PackageLoader, select_autoescape
+from shutil import copyfile
  
-class SteamCareer(Tk):
+class SteamCareer(Tk):    
+    CONF_FILE_STEAM_USER = 'steam-user.conf'
+    CONF_FILE_STEAM_API_KEY = 'steam-api-key.conf'
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
@@ -35,21 +38,35 @@ class SteamCareer(Tk):
         self.bottomframe.pack(side=BOTTOM)    
         
         self.label = Label(self.frame, text="User Name")
-        self.label.pack(side=LEFT)
-        
+        self.label.grid(row=0,column=0, sticky=E)
+    
+        with open(self.CONF_FILE_STEAM_USER, 'r') as myfile:
+            steamApiUser = myfile.read().replace('\n', '')        
         self.entry = Entry(self.frame)
-        self.entry.insert(END, 'gobbo18uk')    
-        self.entry.pack(side=RIGHT)
+        self.entry.insert(END, steamApiUser)
+        self.entry.grid(row=0,column=1)
+
+        self.apiKeyLabel = Label(self.frame, text="API Key")
+        self.apiKeyLabel.grid(row=1,column=0, sticky=E)
+
+        with open(self.CONF_FILE_STEAM_API_KEY, 'r') as myfile:
+            steamApiKey = myfile.read().replace('\n', '')        
+        self.apiKeyEntry = Entry(self.frame)
+        self.apiKeyEntry.insert(END, steamApiKey)    
+        self.apiKeyEntry.grid(row=1,column=1)
         
-        self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff)
+        self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff, height = 2, width = 30)
         self.button.pack(side=BOTTOM)
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def doCoolStuff(self):
-        with open('steam-api-key.conf', 'r') as myfile:
-            steamApiKey = myfile.read().replace('\n', '')
+        with open(self.CONF_FILE_STEAM_USER, "wb") as f:
+            f.write(self.entry.get().encode("UTF-8"))
             
-        steamapi.core.APIConnection(api_key=steamApiKey, validate_key=True)
+        with open(self.CONF_FILE_STEAM_API_KEY, "wb") as f:
+            f.write(self.apiKeyEntry.get().encode("UTF-8"))
+            
+        steamapi.core.APIConnection(api_key=self.apiKeyEntry.get(), validate_key=True)
         steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
 
 #         self.printSteamDataToConsole(steam_user)
@@ -115,6 +132,8 @@ class SteamCareer(Tk):
             os.startfile(resultPath)
         elif os.name == 'posix':
             subprocess.call(('xdg-open', resultPath))
+            
+        copyfile("src\\templates\\templates\\styles.css", "result-pages\\styles.css")
             
 ''' ------------------------------------------------------------------------------------------------ '''
 app = SteamCareer()
