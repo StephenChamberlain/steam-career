@@ -27,7 +27,7 @@
 {%- endmacro %} 
 
 {% macro game_name(game) -%}
-{{game.name | replace("â„¢","&trade;" | safe)}} 
+{{game.name | replace("™","&trade;") | replace("®","&reg;") | safe}} 
 {%- endmacro %}
 
 <body class="body">
