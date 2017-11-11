@@ -27,7 +27,7 @@ class SteamCareer(Tk):
 
         Tk.__init__(self)
         self.title("Steam Career")
-        self.iconbitmap(cwd + '\\src\\main\\resources\\favicon.ico')
+        self.iconbitmap(cwd + '\\favicon.ico')
         
         self.buildGui()
         
@@ -139,7 +139,7 @@ class SteamCareer(Tk):
         elif os.name == 'posix':
             subprocess.call(('xdg-open', resultPath))
             
-        copyfile("src\\templates\\templates\\styles.css", "result-pages\\styles.css")
+        copyfile("templates\\templates\\styles.css", "result-pages\\styles.css")
             
 ''' ------------------------------------------------------------------------------------------------ '''
 app = SteamCareer()
