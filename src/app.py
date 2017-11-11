@@ -22,40 +22,46 @@ class SteamCareer(Tk):
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
-        Tk.__init__(self)
-        
         cwd = os.getcwd()
         print ("Current working directory: " + cwd)
+
+        Tk.__init__(self)
+        self.title("Steam Career")
+        self.iconbitmap(cwd + '\\src\\main\\resources\\favicon.ico')
         
         self.buildGui()
         
     ''' ------------------------------------------------------------------------------------------------ '''
     def buildGui(self):
+        padx = 5
+        pady = 5
+        
         self.frame = Frame(self)
-        self.frame.pack()
+        self.frame.pack(padx=padx, pady=pady)
         
         self.bottomframe = Frame(self)
-        self.bottomframe.pack(side=BOTTOM)    
+        self.bottomframe.pack(side=BOTTOM, padx=padx, pady=pady)    
         
         self.label = Label(self.frame, text="User Name")
-        self.label.grid(row=0,column=0, sticky=E)
+        self.label.grid(row=0, column=0, sticky=E, padx=padx, pady=pady)
     
         with open(self.CONF_FILE_STEAM_USER, 'r') as myfile:
             steamApiUser = myfile.read().replace('\n', '')        
-        self.entry = Entry(self.frame)
+        self.entry = Entry(self.frame, width=40)
         self.entry.insert(END, steamApiUser)
-        self.entry.grid(row=0,column=1)
+        self.entry.grid(row=0, column=1, padx=padx, pady=pady)
+        
 
         self.apiKeyLabel = Label(self.frame, text="API Key")
-        self.apiKeyLabel.grid(row=1,column=0, sticky=E)
+        self.apiKeyLabel.grid(row=1, column=0, sticky=E, padx=padx, pady=pady)
 
         with open(self.CONF_FILE_STEAM_API_KEY, 'r') as myfile:
             steamApiKey = myfile.read().replace('\n', '')        
-        self.apiKeyEntry = Entry(self.frame)
+        self.apiKeyEntry = Entry(self.frame, width=40)
         self.apiKeyEntry.insert(END, steamApiKey)    
-        self.apiKeyEntry.grid(row=1,column=1)
+        self.apiKeyEntry.grid(row=1, column=1, padx=padx, pady=pady)
         
-        self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff, height = 2, width = 30)
+        self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff, height = 2, width = 30, padx=padx, pady=pady)
         self.button.pack(side=BOTTOM)
     
     ''' ------------------------------------------------------------------------------------------------ '''
