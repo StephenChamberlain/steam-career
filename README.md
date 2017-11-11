@@ -1,4 +1,5 @@
-# Steam Career
+Steam Career [![Build Status](https://travis-ci.org/StephenChamberlain/steam-career.svg?branch=master)](https://travis-ci.org/StephenChamberlain/steam-career)
+========
 Experimental Python application which uses the Steam Web API to retrieve player data and present an overview in HTML 
 form.
 
