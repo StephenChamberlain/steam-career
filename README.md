@@ -8,6 +8,7 @@ form.
 - Python (3.6.3).
 
 ## Components
-- [https://github.com/StephenChamberlain/steamapi] (forked from https://github.com/smiley/steamapi).
+- Steamapi (https://github.com/StephenChamberlain/steamapi forked from https://github.com/smiley/steamapi).
 - Tkinter (UI).
 - Jinja2 (templating engine).
+- Pynsist (https://github.com/takluyver/pynsist installer).
