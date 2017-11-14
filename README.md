@@ -12,3 +12,8 @@ form.
 - Tkinter (UI).
 - Jinja2 (templating engine).
 - Pynsist (https://github.com/takluyver/pynsist installer).
+
+## Result
+If all goes well, the application will generate output in HTML form. 
+An example is given below.
+![Alt text](/docs/result.png?raw=true)
