@@ -143,6 +143,10 @@ class SteamCareer(Tk):
         copyfile("steamcareer\\templates\\templates\\styles.css", "result-pages\\styles.css")
             
 ''' ------------------------------------------------------------------------------------------------ '''
+abspath = os.path.abspath(os.path.join(__file__, os.pardir))
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 app = SteamCareer()
 app.mainloop()
     
