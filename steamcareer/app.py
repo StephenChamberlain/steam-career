@@ -27,7 +27,7 @@ class SteamCareer(Tk):
 
         Tk.__init__(self)
         self.title("Steam Career")
-        self.iconbitmap(cwd + '\\favicon.ico')
+        self.iconbitmap(cwd + '\\steamcareer\\favicon.ico')
         
         self.buildGui()
         
@@ -44,21 +44,22 @@ class SteamCareer(Tk):
         
         self.label = Label(self.frame, text="User Name")
         self.label.grid(row=0, column=0, sticky=E, padx=padx, pady=pady)
-    
-        with open(self.CONF_FILE_STEAM_USER, 'r') as myfile:
-            steamApiUser = myfile.read().replace('\n', '')        
+            
         self.entry = Entry(self.frame, width=40)
-        self.entry.insert(END, steamApiUser)
-        self.entry.grid(row=0, column=1, padx=padx, pady=pady)
-        
+        if os.path.isfile(self.CONF_FILE_STEAM_USER):
+            with open(self.CONF_FILE_STEAM_USER, 'r') as myfile:
+                steamApiUser = myfile.read().replace('\n', '')        
+            self.entry.insert(END, steamApiUser)
+        self.entry.grid(row=0, column=1, padx=padx, pady=pady)        
 
         self.apiKeyLabel = Label(self.frame, text="API Key")
         self.apiKeyLabel.grid(row=1, column=0, sticky=E, padx=padx, pady=pady)
-
-        with open(self.CONF_FILE_STEAM_API_KEY, 'r') as myfile:
-            steamApiKey = myfile.read().replace('\n', '')        
+        
         self.apiKeyEntry = Entry(self.frame, width=40)
-        self.apiKeyEntry.insert(END, steamApiKey)    
+        if os.path.isfile(self.CONF_FILE_STEAM_API_KEY):
+            with open(self.CONF_FILE_STEAM_API_KEY, 'r') as myfile:
+                steamApiKey = myfile.read().replace('\n', '')        
+            self.apiKeyEntry.insert(END, steamApiKey)    
         self.apiKeyEntry.grid(row=1, column=1, padx=padx, pady=pady)
         
         self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff, height = 2, width = 30, padx=padx, pady=pady)
@@ -139,7 +140,7 @@ class SteamCareer(Tk):
         elif os.name == 'posix':
             subprocess.call(('xdg-open', resultPath))
             
-        copyfile("templates\\templates\\styles.css", "result-pages\\styles.css")
+        copyfile("steamcareer\\templates\\templates\\styles.css", "result-pages\\styles.css")
             
 ''' ------------------------------------------------------------------------------------------------ '''
 app = SteamCareer()
