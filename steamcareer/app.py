@@ -10,18 +10,30 @@ Uses the steamapi Python library at https://github.com/smiley/steamapi.
 @author: Stephen Chamberlain
 '''
 
-import io, subprocess, os, steamapi, math, datetime
+import subprocess, os, steamapi, math, datetime, appdirs
 
-from tkinter import *
-from jinja2 import Template, Environment, PackageLoader, select_autoescape
+from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, sys
+from jinja2 import Environment, PackageLoader, select_autoescape
 from shutil import copyfile
+from steamapi import errors
  
 class SteamCareer(Tk):    
-    CONF_FILE_STEAM_USER = 'steam-user.conf'
-    CONF_FILE_STEAM_API_KEY = 'steam-api-key.conf'
+    APP_NAME = 'steam-career'
+    APP_AUTHOR = 'steve-chamberlain'
+    APP_VERSION = '1.0'
+    APP_ROAMING = False
+    
+    CONF_FILE_STEAM_USER = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAMING) + '\\steam-user.conf'
+    CONF_FILE_STEAM_API_KEY = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAMING) + '\\steam-api-key.conf'
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
+        
+        ''' set current dir to location of script parent, root of the application '''
+        abspath = os.path.abspath(os.path.join(__file__, os.pardir))
+        dname = os.path.dirname(abspath)
+        os.chdir(dname)
+                
         cwd = os.getcwd()
         print ("Current working directory: " + cwd)
 
@@ -29,7 +41,8 @@ class SteamCareer(Tk):
         self.title("Steam Career")
         self.iconbitmap(cwd + '\\steamcareer\\favicon.ico')
         
-        self.buildGui()
+        self.buildGui()   
+        self.centre(self)     
         
     ''' ------------------------------------------------------------------------------------------------ '''
     def buildGui(self):
@@ -62,22 +75,30 @@ class SteamCareer(Tk):
             self.apiKeyEntry.insert(END, steamApiKey)    
         self.apiKeyEntry.grid(row=1, column=1, padx=padx, pady=pady)
         
-        self.button = Button(self.bottomframe, text="Go", command=self.doCoolStuff, height = 2, width = 30, padx=padx, pady=pady)
-        self.button.pack(side=BOTTOM)
+        self.button = Button(self.bottomframe, text="Go", command=self.generateResult, height = 2, width = 30, padx=padx, pady=pady)
+        self.button.pack(side=BOTTOM)        
     
     ''' ------------------------------------------------------------------------------------------------ '''
-    def doCoolStuff(self):
-        with open(self.CONF_FILE_STEAM_USER, "wb") as f:
-            f.write(self.entry.get().encode("UTF-8"))
+    def generateResult(self):
+        try:
+            os.makedirs(os.path.dirname(self.CONF_FILE_STEAM_USER), exist_ok=True)
+            with open(self.CONF_FILE_STEAM_USER, "wb") as f:
+                f.write(self.entry.get().encode("UTF-8"))
             
-        with open(self.CONF_FILE_STEAM_API_KEY, "wb") as f:
-            f.write(self.apiKeyEntry.get().encode("UTF-8"))
+            os.makedirs(os.path.dirname(self.CONF_FILE_STEAM_API_KEY), exist_ok=True)    
+            with open(self.CONF_FILE_STEAM_API_KEY, "wb") as f:
+                f.write(self.apiKeyEntry.get().encode("UTF-8"))
+                
+            steamapi.core.APIConnection(api_key=self.apiKeyEntry.get(), validate_key=True)
+            steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
+    
+    #         self.printSteamDataToConsole(steam_user)
+            self.generateResultPage(steam_user)
             
-        steamapi.core.APIConnection(api_key=self.apiKeyEntry.get(), validate_key=True)
-        steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
-
-#         self.printSteamDataToConsole(steam_user)
-        self.generateResultPage(steam_user)
+        except errors.APIException as exception:
+            messagebox.showerror("Error", str(exception))
+        except PermissionError as exception:
+            messagebox.showerror("Error", str(exception))
 
     ''' ------------------------------------------------------------------------------------------------ '''
     def printSteamDataToConsole(self, steam_user):
@@ -142,11 +163,17 @@ class SteamCareer(Tk):
             
         copyfile("steamcareer\\templates\\templates\\styles.css", "result-pages\\styles.css")
             
+    ''' ------------------------------------------------------------------------------------------------ '''         
+    def centre(self, toplevel):
+        toplevel.update_idletasks()
+        w = toplevel.winfo_screenwidth()
+        h = toplevel.winfo_screenheight()
+        size = tuple(int(_) for _ in toplevel.geometry().split('+')[0].split('x'))
+        x = w/2 - size[0]/2
+        y = h/2 - size[1]/2
+        toplevel.geometry("%dx%d+%d+%d" % (size + (x, y)))
+                
 ''' ------------------------------------------------------------------------------------------------ '''
-abspath = os.path.abspath(os.path.join(__file__, os.pardir))
-dname = os.path.dirname(abspath)
-os.chdir(dname)
-
 app = SteamCareer()
 app.mainloop()
     
