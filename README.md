@@ -4,8 +4,10 @@ Experimental Python application which uses the Steam Web API to retrieve player 
 form.
 
 ## Environment
+- Github.
 - Eclipse (Oxygen.1a Release (4.7.1a)) with PyDev installed.
 - Python (3.6.3).
+- Travis CI.
 
 ## Components
 - Steamapi (https://github.com/StephenChamberlain/steamapi forked from https://github.com/smiley/steamapi).

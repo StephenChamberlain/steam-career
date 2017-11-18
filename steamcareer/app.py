@@ -17,7 +17,7 @@ import math
 import datetime
 import appdirs
 
-from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, sys
+from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, sys, filedialog, StringVar
 from jinja2 import Environment, PackageLoader, select_autoescape
 from shutil import copyfile
  
@@ -29,6 +29,7 @@ class SteamCareer(Tk):
     
     CONF_FILE_STEAM_USER = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAMING) + '\\steam-user.conf'
     CONF_FILE_STEAM_API_KEY = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAMING) + '\\steam-api-key.conf'
+    CONF_RESULT_LOCATION = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAMING) + '\\result-location.conf'    
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
@@ -78,9 +79,28 @@ class SteamCareer(Tk):
                 steamApiKey = myfile.read().replace('\n', '')        
             self.apiKeyEntry.insert(END, steamApiKey)    
         self.apiKeyEntry.grid(row=1, column=1, padx=padx, pady=pady)
+
+        self.resultLocationLabel = Label(self.frame, text="Result Location")
+        self.resultLocationLabel.grid(row=2, column=0, sticky=E, padx=padx, pady=pady)
+        
+        self.resultLocation = StringVar()
+        self.resultLocationEntry = Entry(self.frame, textvariable=self.resultLocation, width=40)
+        if os.path.isfile(self.CONF_RESULT_LOCATION):
+            with open(self.CONF_RESULT_LOCATION, 'r') as myfile:
+                resultLocation = myfile.read().replace('\n', '')        
+            self.resultLocationEntry.insert(END, resultLocation)    
+        self.resultLocationEntry.grid(row=2, column=1, padx=padx, pady=pady)
+        
+        self.resultLocationButton = Button(self.frame, text="...", command=self.callback, height = 1, width = 1, padx=padx, pady=pady)
+        self.resultLocationButton.grid(row=2, column=2, padx=padx, pady=pady)
         
         self.button = Button(self.bottomframe, text="Go", command=self.generateResult, height = 2, width = 30, padx=padx, pady=pady)
-        self.button.pack(side=BOTTOM)        
+        self.button.pack(side=BOTTOM)    
+    
+    ''' ------------------------------------------------------------------------------------------------ '''    
+    def callback(self):
+        filename = filedialog.askdirectory()
+        self.resultLocation.set(filename)
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def generateResult(self):
@@ -92,6 +112,10 @@ class SteamCareer(Tk):
             os.makedirs(os.path.dirname(self.CONF_FILE_STEAM_API_KEY), exist_ok=True)    
             with open(self.CONF_FILE_STEAM_API_KEY, "wb") as f:
                 f.write(self.apiKeyEntry.get().encode("UTF-8"))
+                
+            os.makedirs(os.path.dirname(self.CONF_RESULT_LOCATION), exist_ok=True)    
+            with open(self.CONF_RESULT_LOCATION, "wb") as f:
+                f.write(self.resultLocationEntry.get().encode("UTF-8"))                
                 
             steamapi.core.APIConnection(api_key=self.apiKeyEntry.get(), validate_key=True)
             steam_user = steamapi.user.SteamUser(userurl=self.entry.get())
@@ -144,7 +168,7 @@ class SteamCareer(Tk):
         
         timestamp = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
         
-        resultPath = "result-pages\\" + steam_user.name + ".html"        
+        resultPath = self.resultLocationEntry.get() + "\\" + steam_user.name + ".html"        
         os.makedirs(os.path.dirname(resultPath), exist_ok=True)         
         with open(resultPath, "wb") as f:
             result = template.render(
@@ -163,7 +187,7 @@ class SteamCareer(Tk):
         elif os.name == 'posix':
             subprocess.call(('xdg-open', resultPath))
             
-        copyfile("templates\\styles.css", "result-pages\\styles.css")
+        copyfile("templates\\styles.css", self.resultLocationEntry.get() + "\\styles.css")
             
     ''' ------------------------------------------------------------------------------------------------ '''         
     def centre(self, toplevel):
