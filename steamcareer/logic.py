@@ -1,37 +1,45 @@
+__author__ = 'Stephen Chamberlain'
+
 '''
 Created on 18 Nov 2017
 
-@author: Stephen
+Contains the logic to generate HTML output from steam API input.
+
+@author: Stephen Chamberlain
 '''
 
-import os
-import math
 import datetime
-import steamapi
+import math
+import os
 import subprocess
+import steamapi
 
-from tkinter import sys # TODO: shouldnt be any dependency on tkinter here!
 from jinja2 import Environment, PackageLoader, select_autoescape
+from tkinter import sys  # TODO: shouldnt be any dependency on tkinter here!
 from shutil import copyfile
 
 ''' ------------------------------------------------------------------------------------------------ '''
 def printSteamDataToConsole(steam_user):
-    content = "Your real name is {0}. You have {1} friends and {2} games.".format(steam_user.real_name, len(steam_user.friends), len(steam_user.games))
+    content = "{0}s real name is {1}. Player has {2} friends and {3} games.".format(
+        steam_user.name,
+        steam_user.real_name, 
+        len(steam_user.friends), 
+        len(steam_user.games))
     
     print ("")    
     print (content)
     
     print ("")
-    print ("You recently played:")
+    print ("Recently played:")
     for game in steam_user.recently_played:
         print ("  " + game.name)
     
     print ("")    
-    print ("Your collection:")        
+    print ("Collection:")        
     for game in sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True):
         total_hours_played = math.ceil(game.playtime_forever / 60)
         print ("  {0}, total play time: {1}".format(game.name, total_hours_played))
-                
+
 ''' ------------------------------------------------------------------------------------------------ '''
 def generateResultPage(apiKey, userId, resultLocation):
     print ("")    
@@ -39,6 +47,8 @@ def generateResultPage(apiKey, userId, resultLocation):
     
     steamapi.core.APIConnection(api_key=apiKey, validate_key=True)
     steam_user = steamapi.user.SteamUser(userurl=userId)    
+    
+    printSteamDataToConsole(steam_user)
     
     env = Environment(
         loader=PackageLoader("steamcareer"),
@@ -63,9 +73,9 @@ def generateResultPage(apiKey, userId, resultLocation):
     os.makedirs(os.path.dirname(resultPath), exist_ok=True)         
     with open(resultPath, "wb") as f:
         result = template.render(
-            user=steam_user, 
-            games=games, 
-            total_hours_played=total_hours_played, 
+            user=steam_user,
+            games=games,
+            total_hours_played=total_hours_played,
             nr_actually_played_games=nr_actually_played_games,
             timestamp=timestamp)         
         

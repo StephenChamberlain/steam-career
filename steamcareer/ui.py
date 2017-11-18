@@ -1,36 +1,31 @@
+__author__ = 'Stephen Chamberlain'
+
 '''
 Created on 18 Nov 2017
 
-@author: Stephen
+User interface module.
+
+@author: Stephen Chamberlain
 '''
 
 import os
 
-import logic  # @UnresolvedImport
-import constants # @UnresolvedImport
-
-from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, sys, filedialog, StringVar
+from steamcareer import constants
+from steamcareer import logic
+from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, filedialog, StringVar
 
 class Gui(Tk):
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
-        
-        ''' set current dir to location of script, root of the application '''
-        abspath = os.path.abspath(__file__)
-        dname = os.path.dirname(abspath)
-        os.chdir(dname)
-                
-        cwd = os.getcwd()
-        print ("Current working directory: " + cwd)
 
         Tk.__init__(self)
-        self.title("Steam Career")
-        self.iconbitmap(cwd + '\\favicon.ico')
+        self.title("Steam Career - " + constants.APP_VERSION)
+        self.iconbitmap(os.getcwd() + '\\resources\\favicon.ico')
         
         self.buildGui()   
-        self.centre(self) 
-            
+        self.centre(self)  
+    
     ''' ------------------------------------------------------------------------------------------------ '''
     def buildGui(self):
         padx = 5
@@ -73,10 +68,10 @@ class Gui(Tk):
             self.resultLocationEntry.insert(END, resultLocation)    
         self.resultLocationEntry.grid(row=2, column=1, padx=padx, pady=pady)
         
-        self.resultLocationButton = Button(self.frame, text="...", command=self.callback, height = 1, width = 1, padx=padx, pady=pady)
+        self.resultLocationButton = Button(self.frame, text="...", command=self.callback, height=1, width=1, padx=padx, pady=pady)
         self.resultLocationButton.grid(row=2, column=2, padx=padx, pady=pady)
         
-        self.button = Button(self.bottomframe, text="Go", command=self.generateResult, height = 2, width = 30, padx=padx, pady=pady)
+        self.button = Button(self.bottomframe, text="Go", command=self.generateResult, height=2, width=30, padx=padx, pady=pady)
         self.button.pack(side=BOTTOM)    
     
     ''' ------------------------------------------------------------------------------------------------ '''         
@@ -89,8 +84,8 @@ class Gui(Tk):
         
         size = tuple(int(_) for _ in toplevel.geometry().split('+')[0].split('x'))
         
-        x = w/2 - size[0]/2
-        y = h/2 - size[1]/2
+        x = w / 2 - size[0] / 2
+        y = h / 2 - size[1] / 2
         
         toplevel.geometry("%dx%d+%d+%d" % (size + (x, y)))
         
@@ -113,8 +108,7 @@ class Gui(Tk):
             os.makedirs(os.path.dirname(constants.CONF_RESULT_LOCATION), exist_ok=True)    
             with open(constants.CONF_RESULT_LOCATION, "wb") as f:
                 f.write(self.resultLocationEntry.get().encode("UTF-8"))                
-                
-    #         self.printSteamDataToConsole(steam_user)
+            
             logic.generateResultPage(self.apiKeyEntry.get(), self.entry.get(), self.resultLocationEntry.get())
       
         except Exception as exception:            

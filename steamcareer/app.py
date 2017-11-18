@@ -3,15 +3,26 @@ __author__ = 'Stephen Chamberlain'
 '''
 Created on 28 Oct 2017
 
-Simple application to retrieve Steam statistics and present them in some cool way :-)
-
-Uses the steamapi Python library at https://github.com/smiley/steamapi.
+Experimental Python application which uses the Steam Web API to retrieve player data and present an overview in 
+HTML form.
 
 @author: Stephen Chamberlain
 '''
 
-import ui  # @UnresolvedImport
+import os
+
+from steamcareer import ui
+
+def setWorkingDirectoryToAppRoot():
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+            
+    cwd = os.getcwd()
+    print ("Current working directory: " + cwd)
+
+''' ------------------------------------------------------------------------------------------------ '''
+setWorkingDirectoryToAppRoot()
 
 app = ui.Gui()
 app.mainloop()
-    
