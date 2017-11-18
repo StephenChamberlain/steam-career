@@ -10,12 +10,16 @@ Uses the steamapi Python library at https://github.com/smiley/steamapi.
 @author: Stephen Chamberlain
 '''
 
-import subprocess, os, steamapi, math, datetime, appdirs
+import subprocess
+import os
+import steamapi
+import math
+import datetime
+import appdirs
 
 from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, sys
 from jinja2 import Environment, PackageLoader, select_autoescape
 from shutil import copyfile
-from steamapi import errors
  
 class SteamCareer(Tk):    
     APP_NAME = 'steam-career'
@@ -29,8 +33,8 @@ class SteamCareer(Tk):
     ''' ------------------------------------------------------------------------------------------------ '''
     def __init__(self):
         
-        ''' set current dir to location of script parent, root of the application '''
-        abspath = os.path.abspath(os.path.join(__file__, os.pardir))
+        ''' set current dir to location of script, root of the application '''
+        abspath = os.path.abspath(__file__)
         dname = os.path.dirname(abspath)
         os.chdir(dname)
                 
@@ -39,7 +43,7 @@ class SteamCareer(Tk):
 
         Tk.__init__(self)
         self.title("Steam Career")
-        self.iconbitmap(cwd + '\\steamcareer\\favicon.ico')
+        self.iconbitmap(cwd + '\\favicon.ico')
         
         self.buildGui()   
         self.centre(self)     
@@ -95,9 +99,7 @@ class SteamCareer(Tk):
     #         self.printSteamDataToConsole(steam_user)
             self.generateResultPage(steam_user)
             
-        except errors.APIException as exception:
-            messagebox.showerror("Error", str(exception))
-        except PermissionError as exception:
+        except Exception as exception:            
             messagebox.showerror("Error", str(exception))
 
     ''' ------------------------------------------------------------------------------------------------ '''
@@ -124,7 +126,7 @@ class SteamCareer(Tk):
         print ("Generating results page...")        
         
         env = Environment(
-            loader=PackageLoader('templates', 'templates'),
+            loader=PackageLoader("steamcareer"),
             autoescape=select_autoescape(['html', 'xml'])
         )
         
@@ -161,7 +163,7 @@ class SteamCareer(Tk):
         elif os.name == 'posix':
             subprocess.call(('xdg-open', resultPath))
             
-        copyfile("steamcareer\\templates\\templates\\styles.css", "result-pages\\styles.css")
+        copyfile("templates\\styles.css", "result-pages\\styles.css")
             
     ''' ------------------------------------------------------------------------------------------------ '''         
     def centre(self, toplevel):
