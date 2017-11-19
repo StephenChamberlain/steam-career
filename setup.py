@@ -1,3 +1,5 @@
+__author__ = 'Stephen Chamberlain'
+
 '''
 Created on 19 Nov 2017
 

@@ -1,7 +1,9 @@
+__author__ = 'Stephen Chamberlain'
+
 '''
 Created on 18 Nov 2017
 
-@author: Stephen
+@author: Stephen Chamberlain
 '''
 
 import unittest
