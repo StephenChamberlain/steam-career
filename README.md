@@ -3,6 +3,24 @@ Steam Career [![Build Status](https://travis-ci.org/StephenChamberlain/steam-car
 Experimental Python application which uses the Steam Web API to retrieve player data and present an overview in HTML 
 form.
 
+## Instructions
+1. Log in to steam and generate an API key (see https://steamcommunity.com/dev/apikey).
+2. Install the tool (TODO: link to installer!)
+3. Provide the steam user ID of the player to generate results for, the API key you
+defined in step 1 and the output location for the results and click "Go".
+![User interface](/docs/ui.png?raw=true)
+4. The resulting HTML file will be generated and opened in your default browser.
+> Note: the result location will contain two files; the resulting HTML itself and
+and external CSS style sheet. This stylesheet can be modified as you see fit, the
+tool will not overwrite this file if it already exists. Results are stored in an 
+HTML file with the name of the player, so you can modify the single stylesheet and
+affect the look and feel of all results.
+
+## Result
+If all goes well, the application will generate output in HTML form. 
+An example is given below.
+![Resulting HTML file](/docs/result.png?raw=true)
+
 ## Environment
 - Github.
 - Eclipse (Oxygen.1a Release (4.7.1a)) with PyDev installed.
@@ -14,8 +32,4 @@ form.
 - Tkinter (UI).
 - Jinja2 (templating engine).
 - Pynsist (https://github.com/takluyver/pynsist installer).
-
-## Result
-If all goes well, the application will generate output in HTML form. 
-An example is given below.
-![Alt text](/docs/result.png?raw=true)
+- Icon from http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html.
