@@ -7,11 +7,12 @@ form.
 1. Log in to steam and generate an API key (see https://steamcommunity.com/dev/apikey).
 2. Install the tool (TODO: link to installer!)
 3. Provide the steam user ID of the player to generate results for, the API key you
-defined in step 1 and the output location for the results and click "Go".
+defined in step 1 and the output location for the results and click "Go".  
+
 ![User interface](/docs/ui.png?raw=true)
 4. The resulting HTML file will be generated and opened in your default browser.
 > Note: the result location will contain two files; the resulting HTML itself and
-and external CSS style sheet. This stylesheet can be modified as you see fit, the
+an external CSS style sheet. This stylesheet can be modified as you see fit, the
 tool will not overwrite this file if it already exists. Results are stored in an 
 HTML file with the name of the player, so you can modify the single stylesheet and
 affect the look and feel of all results.
