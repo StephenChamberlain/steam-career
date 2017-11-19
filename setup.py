@@ -25,5 +25,5 @@ setup(
     license = "MIT",
     url = "https://github.com/StephenChamberlain/steam-career",
     packages=['steamcareer'],
-    long_description=read('README'),
+    long_description=read('README.md'),
 )
