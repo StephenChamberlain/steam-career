@@ -9,7 +9,8 @@ form.
 3. Provide the steam user ID of the player to generate results for, the API key you
 defined in step 1 and the output location for the results and click "Go".  
 
-![User interface](/docs/ui.png?raw=true)
+![User interface](/docs/ui.png?raw=true)  
+
 4. The resulting HTML file will be generated and opened in your default browser.
 > Note: the result location will contain two files; the resulting HTML itself and
 an external CSS style sheet. This stylesheet can be modified as you see fit, the
