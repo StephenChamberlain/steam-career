@@ -5,3 +5,5 @@ chardet==3.0.4
 certifi==2017.7.27.1
 idna==2.6
 appdirs==1.4.3
+
+-e git://github.com/StephenChamberlain/steamapi.git@master#egg=steamapi
