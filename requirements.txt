@@ -1,0 +1,7 @@
+requests==2.18.4
+Jinja2==2.9.6
+urllib3==1.22
+chardet==3.0.4
+certifi==2017.7.27.1
+idna==2.6
+appdirs==1.4.3

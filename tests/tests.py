@@ -5,14 +5,16 @@ Created on 18 Nov 2017
 '''
 
 import unittest
-# import os
+import steamapi
 
-# from steamcareer import logic 
+from steamcareer import logic, constants 
 
 class Test(unittest.TestCase):
 
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
+    def test_APIConfigurationError(self):
+        self.assertRaises(steamapi.errors.APIConfigurationError, 
+                          logic.generateResultPage, 
+                          "invalidApiKey", "nonExistingUser", constants.USER_APP_DIR + "\\steam-career-tests")
         
 if __name__ == "__main__":
     unittest.main()
