@@ -19,7 +19,7 @@ from tkinter import sys  # TODO: shouldnt be any dependency on tkinter here!
 from shutil import copyfile
 
 ''' ------------------------------------------------------------------------------------------------ '''
-def printSteamDataToConsole(steam_user):
+def __printSteamDataToConsole(steam_user):
     content = "{0}s real name is {1}. Player has {2} friends and {3} games.".format(
         steam_user.name,
         steam_user.real_name, 
@@ -41,6 +41,24 @@ def printSteamDataToConsole(steam_user):
         print ("  {0}, total play time: {1}".format(game.name, total_hours_played))
 
 ''' ------------------------------------------------------------------------------------------------ '''
+def __copyStyleSheetToResultLocation(resultLocation):
+    cssResultLocation = resultLocation + "\\styles.css"
+    if os.path.exists(cssResultLocation):
+        print ("")
+        print ("Not copying CSS stylesheet, " + cssResultLocation + " already exists, user might have modified it")
+    else:
+        copyfile("templates\\styles.css", cssResultLocation)
+    
+''' ------------------------------------------------------------------------------------------------ '''
+def __openResultInSystemBrowser(resultPath):
+    if sys.platform.startswith('darwin'):
+        subprocess.call(('open', resultPath))
+    elif os.name == 'nt':
+        os.startfile(resultPath)
+    elif os.name == 'posix':
+        subprocess.call(('xdg-open', resultPath))
+
+''' ------------------------------------------------------------------------------------------------ '''
 def generateResultPage(apiKey, userId, resultLocation):
     print ("")    
     print ("Generating results page...")        
@@ -48,7 +66,7 @@ def generateResultPage(apiKey, userId, resultLocation):
     steamapi.core.APIConnection(api_key=apiKey, validate_key=True)
     steam_user = steamapi.user.SteamUser(userurl=userId)    
     
-    printSteamDataToConsole(steam_user)
+    __printSteamDataToConsole(steam_user)
     
     env = Environment(
         loader=PackageLoader("steamcareer"),
@@ -81,11 +99,5 @@ def generateResultPage(apiKey, userId, resultLocation):
         
         f.write(result.encode("UTF-8")) 
         
-    if sys.platform.startswith('darwin'):
-        subprocess.call(('open', resultPath))
-    elif os.name == 'nt':
-        os.startfile(resultPath)
-    elif os.name == 'posix':
-        subprocess.call(('xdg-open', resultPath))
-        
-    copyfile("templates\\styles.css", resultLocation + "\\styles.css")        
+    __copyStyleSheetToResultLocation(resultLocation)
+    __openResultInSystemBrowser(resultPath)

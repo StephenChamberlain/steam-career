@@ -24,7 +24,47 @@ class Gui(Tk):
         self.iconbitmap(os.getcwd() + '\\resources\\favicon.ico')
         
         self.buildGui()   
-        self.centre(self)  
+        self.__centre(self)  
+    
+    ''' ------------------------------------------------------------------------------------------------ '''         
+    def __centre(self, toplevel):
+        
+        toplevel.update_idletasks()
+        
+        w = toplevel.winfo_screenwidth()
+        h = toplevel.winfo_screenheight()
+        
+        size = tuple(int(_) for _ in toplevel.geometry().split('+')[0].split('x'))
+        
+        x = w / 2 - size[0] / 2
+        y = h / 2 - size[1] / 2
+        
+        toplevel.geometry("%dx%d+%d+%d" % (size + (x, y)))
+        
+    ''' ------------------------------------------------------------------------------------------------ '''    
+    def __setResultLocation(self):
+        filename = filedialog.askdirectory()
+        self.resultLocation.set(filename)
+        
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def __generateResult(self):
+        try:
+            os.makedirs(os.path.dirname(constants.CONF_FILE_STEAM_USER), exist_ok=True)
+            with open(constants.CONF_FILE_STEAM_USER, "wb") as f:
+                f.write(self.entry.get().encode("UTF-8"))
+            
+            os.makedirs(os.path.dirname(constants.CONF_FILE_STEAM_API_KEY), exist_ok=True)    
+            with open(constants.CONF_FILE_STEAM_API_KEY, "wb") as f:
+                f.write(self.apiKeyEntry.get().encode("UTF-8"))
+                
+            os.makedirs(os.path.dirname(constants.CONF_RESULT_LOCATION), exist_ok=True)    
+            with open(constants.CONF_RESULT_LOCATION, "wb") as f:
+                f.write(self.resultLocationEntry.get().encode("UTF-8"))                
+            
+            logic.generateResultPage(self.apiKeyEntry.get(), self.entry.get(), self.resultLocationEntry.get())
+      
+        except Exception as exception:            
+            messagebox.showerror("Error", str(exception))             
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def buildGui(self):
@@ -68,48 +108,9 @@ class Gui(Tk):
             self.resultLocationEntry.insert(END, resultLocation)    
         self.resultLocationEntry.grid(row=2, column=1, padx=padx, pady=pady)
         
-        self.resultLocationButton = Button(self.frame, text="...", command=self.callback, height=1, width=1, padx=padx, pady=pady)
+        self.resultLocationButton = Button(self.frame, text="...", command=self.__setResultLocation, height=1, width=1, padx=padx, pady=pady)
         self.resultLocationButton.grid(row=2, column=2, padx=padx, pady=pady)
         
-        self.button = Button(self.bottomframe, text="Go", command=self.generateResult, height=2, width=30, padx=padx, pady=pady)
+        self.button = Button(self.bottomframe, text="Go", command=self.__generateResult, height=2, width=30, padx=padx, pady=pady)
         self.button.pack(side=BOTTOM)    
     
-    ''' ------------------------------------------------------------------------------------------------ '''         
-    def centre(self, toplevel):
-        
-        toplevel.update_idletasks()
-        
-        w = toplevel.winfo_screenwidth()
-        h = toplevel.winfo_screenheight()
-        
-        size = tuple(int(_) for _ in toplevel.geometry().split('+')[0].split('x'))
-        
-        x = w / 2 - size[0] / 2
-        y = h / 2 - size[1] / 2
-        
-        toplevel.geometry("%dx%d+%d+%d" % (size + (x, y)))
-        
-    ''' ------------------------------------------------------------------------------------------------ '''    
-    def callback(self):
-        filename = filedialog.askdirectory()
-        self.resultLocation.set(filename)
-        
-    ''' ------------------------------------------------------------------------------------------------ '''
-    def generateResult(self):
-        try:
-            os.makedirs(os.path.dirname(constants.CONF_FILE_STEAM_USER), exist_ok=True)
-            with open(constants.CONF_FILE_STEAM_USER, "wb") as f:
-                f.write(self.entry.get().encode("UTF-8"))
-            
-            os.makedirs(os.path.dirname(constants.CONF_FILE_STEAM_API_KEY), exist_ok=True)    
-            with open(constants.CONF_FILE_STEAM_API_KEY, "wb") as f:
-                f.write(self.apiKeyEntry.get().encode("UTF-8"))
-                
-            os.makedirs(os.path.dirname(constants.CONF_RESULT_LOCATION), exist_ok=True)    
-            with open(constants.CONF_RESULT_LOCATION, "wb") as f:
-                f.write(self.resultLocationEntry.get().encode("UTF-8"))                
-            
-            logic.generateResultPage(self.apiKeyEntry.get(), self.entry.get(), self.resultLocationEntry.get())
-      
-        except Exception as exception:            
-            messagebox.showerror("Error", str(exception))                
