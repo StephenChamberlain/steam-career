@@ -5,7 +5,7 @@ form.
 
 ## Instructions
 1. Log in to steam and generate an API key (see https://steamcommunity.com/dev/apikey).
-2. Install the tool (TODO: link to installer!)
+2. Install the tool (https://github.com/StephenChamberlain/steam-career/releases/download/v1.0/Steam_Career_1.0.exe)
 3. Provide the steam user ID of the player to generate results for, the API key you
 defined in step 1 and the output location for the results and click "Go".  
 
