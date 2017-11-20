@@ -12,11 +12,19 @@ defined in step 1 and the output location for the results and click "Go".
 ![User interface](/docs/ui.png?raw=true)  
 
 4. The resulting HTML file will be generated and opened in your default browser.
-> Note: the result location will contain two files; the resulting HTML itself and
+
+## Customisations
+The result location will contain two files; the resulting HTML itself and
 an external CSS style sheet. This stylesheet can be modified as you see fit, the
 tool will not overwrite this file if it already exists. Results are stored in an 
 HTML file with the name of the player, so you can modify the single stylesheet and
 affect the look and feel of all results.
+
+The HTML template itself can also be customised; it can be found in the installation
+directory (e.g. C:\Program Files\Steam Career)\pkgs\steamcareer\templates directory.
+The template uses Jinja2 syntax; see smiley's https://github.com/smiley/steamapi 
+project for more information on the available functionality from the 'game' and
+'user' references.
 
 ## Result
 If all goes well, the application will generate output in HTML form. 
@@ -35,3 +43,6 @@ An example is given below.
 - Jinja2 (templating engine).
 - Pynsist (https://github.com/takluyver/pynsist installer).
 - Icon from http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html.
+
+## Legal
+This project is not endorsed in any way by Valve Corporation.
