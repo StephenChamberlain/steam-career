@@ -1,4 +1,4 @@
-Steam Career [![Build Status](https://travis-ci.org/StephenChamberlain/steam-career.svg?branch=master)](https://travis-ci.org/StephenChamberlain/steam-career)
+Steam Career [![Build Status](https://travis-ci.org/StephenChamberlain/steam-career.svg?branch=master)](https://travis-ci.org/StephenChamberlain/steam-career) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ========
 Experimental Python application which uses the Steam Web API to retrieve player data and present an overview in HTML 
 form.
