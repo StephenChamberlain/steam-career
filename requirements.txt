@@ -1,5 +1,5 @@
 requests==2.20.0
-Jinja2==2.9.6
+Jinja2==2.10.1
 urllib3==1.23
 chardet==3.0.4
 certifi==2017.7.27.1

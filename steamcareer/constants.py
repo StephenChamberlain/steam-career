@@ -12,7 +12,7 @@ import appdirs
 
 APP_NAME = 'steam-career'
 APP_AUTHOR = 'steve-chamberlain'
-APP_VERSION = '1.0'
+APP_VERSION = '1.1'
 APP_ROAMING = False
 
 USER_APP_DIR = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAMING)
