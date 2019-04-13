@@ -31,20 +31,14 @@
 {%- endmacro %}
 
 <body class="body">
-	<div class="panel-heading">
-		<p>
-			<img src="{{user.avatar_medium}}" /> {{user.name.upper()}}'S STEAM CAREER
-		</p>
-		<p>Generated {{timestamp}}</p>
-	</div>
 	<div class="container">
-		<p style="text-align: center">{{(total_hours_played) | abs | int}}
-			hours spent playing {{nr_actually_played_games}} games out of a
-			collection of {{games | length}} games</p>
+		<p style="text-align: center">{{(playerData.total_hours_played) | abs | int}}
+			hours spent playing {{playerData.nr_actually_played_games}} games out of a
+			collection of {{playerData.games | length}} games</p>
 		<p>
 		<ul>
 			<hr>
-			{% for game in games %} 
+			{% for game in playerData.games %} 
 				{% if loop.index in [1,2,3] %}
 				<li style="text-align: center">
 					{{game_logo(game)}}<br /> 

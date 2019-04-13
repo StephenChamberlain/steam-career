@@ -15,6 +15,14 @@ img {
 	margin-right: auto;
 }
 
+iframe {
+    display: block;       /* iframes are inline by default */
+    border: none;         /* Reset default border */
+	border-style: none;
+	overflow: hidden;    
+    width: 100vw;
+}
+
 .panel-heading {
 	background-color: #171A21;
 	color: #C4C1BF;

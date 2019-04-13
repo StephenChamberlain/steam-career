@@ -1,3 +1,4 @@
+from steamcareer.playerData import PlayerData
 __author__ = 'Stephen Chamberlain'
 
 '''
@@ -17,6 +18,7 @@ import steamapi
 from jinja2 import Environment, PackageLoader, select_autoescape
 from tkinter import sys  # TODO: shouldnt be any dependency on tkinter here!
 from shutil import copyfile
+from pathlib import Path
 
 ''' ------------------------------------------------------------------------------------------------ '''
 def __printSteamDataToConsole(steam_user):
@@ -39,15 +41,6 @@ def __printSteamDataToConsole(steam_user):
     for game in sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True):
         total_hours_played = math.ceil(game.playtime_forever / 60)
         print ("  {0}, total play time: {1}".format(game.name, total_hours_played))
-
-''' ------------------------------------------------------------------------------------------------ '''
-def __copyStyleSheetToResultLocation(resultLocation):
-    cssResultLocation = resultLocation + "\\styles.css"
-    if os.path.exists(cssResultLocation):
-        print ("")
-        print ("Not copying CSS stylesheet, " + cssResultLocation + " already exists, user might have modified it")
-    else:
-        copyfile("templates\\styles.css", cssResultLocation)
     
 ''' ------------------------------------------------------------------------------------------------ '''
 def __openResultInSystemBrowser(resultPath):
@@ -73,31 +66,32 @@ def generateResultPage(apiKey, userId, resultLocation):
         autoescape=select_autoescape(['html', 'xml'])
     )
     
-    template = env.get_template('career.html')        
-    games = sorted(steam_user.games, key=lambda game: game.playtime_forever, reverse=True)
+    finalResultLocation = Path(resultLocation) / steam_user.name
+    finalResultLocation.mkdir(exist_ok=True) 
     
-    total_hours_played = 0
-    nr_actually_played_games = 0
-    for game in games:
-        if game.playtime_forever > 0:
-            total_hours_played += game.playtime_forever
-            nr_actually_played_games += 1            
+    playerData = PlayerData(steam_user);
     
-    total_hours_played = total_hours_played / 60;
+    __copyStyleSheetToResultLocation(finalResultLocation)
+    __generateTemplate(playerData, env, finalResultLocation, 'header.html')
+    __generateTemplate(playerData, env, finalResultLocation, 'career.html')
+    __openResultInSystemBrowser(__generateTemplate(playerData, env, finalResultLocation, 'index.html'))
     
-    timestamp = '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
+''' ------------------------------------------------------------------------------------------------ '''
+def __copyStyleSheetToResultLocation(resultLocation):
+    cssResultLocation = resultLocation / "styles.css"
+    if os.path.exists(cssResultLocation):
+        print ("")
+        print ("Not copying CSS stylesheet, " + str(cssResultLocation) + " already exists, user might have modified it")
+    else:
+        copyfile("templates\\styles.css", cssResultLocation)    
     
-    resultPath = resultLocation + "\\" + steam_user.name + ".html"        
-    os.makedirs(os.path.dirname(resultPath), exist_ok=True)         
+''' ------------------------------------------------------------------------------------------------ '''
+def __generateTemplate(playerData, env, resultLocation, templatePath):
+    template = env.get_template(templatePath)
+
+    resultPath = resultLocation / templatePath
     with open(resultPath, "wb") as f:
-        result = template.render(
-            user=steam_user,
-            games=games,
-            total_hours_played=total_hours_played,
-            nr_actually_played_games=nr_actually_played_games,
-            timestamp=timestamp)         
-        
-        f.write(result.encode("UTF-8")) 
-        
-    __copyStyleSheetToResultLocation(resultLocation)
-    __openResultInSystemBrowser(resultPath)
+        result = template.render(playerData=playerData)                 
+        f.write(result.encode("UTF-8"))
+
+    return resultPath
