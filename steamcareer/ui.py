@@ -1,4 +1,3 @@
-from django.contrib.admin.helpers import checkbox
 __author__ = 'Stephen Chamberlain'
 
 '''
