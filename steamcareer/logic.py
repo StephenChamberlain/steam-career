@@ -9,7 +9,6 @@ Contains the logic to generate HTML output from steam API input.
 @author: Stephen Chamberlain
 '''
 
-import datetime
 import math
 import os
 import subprocess

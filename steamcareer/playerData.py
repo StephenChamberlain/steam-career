@@ -1,6 +1,8 @@
 '''
 Created on 13 Apr 2019
 
+Holds player data so that necessary data processing can happen in one place and the result shared between all templates.
+
 @author: Stephen
 '''
 

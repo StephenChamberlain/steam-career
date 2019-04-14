@@ -1,3 +1,4 @@
+from django.contrib.admin.helpers import checkbox
 __author__ = 'Stephen Chamberlain'
 
 '''
@@ -9,10 +10,11 @@ User interface module.
 '''
 
 import os
+import tkinter
 
 from steamcareer import constants
 from steamcareer import logic
-from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, E, messagebox, filedialog, StringVar
+from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, W, E, messagebox, filedialog, StringVar, Checkbutton
 
 class Gui(Tk):
     
@@ -64,7 +66,7 @@ class Gui(Tk):
             logic.generateResultPage(self.apiKeyEntry.get(), self.entry.get(), self.resultLocationEntry.get())
       
         except Exception as exception:            
-            messagebox.showerror("Error", str(exception))             
+            messagebox.showerror("Error", str(exception))                
     
     ''' ------------------------------------------------------------------------------------------------ '''
     def buildGui(self):
@@ -77,6 +79,16 @@ class Gui(Tk):
         self.bottomframe = Frame(self)
         self.bottomframe.pack(side=BOTTOM, padx=padx, pady=pady)    
         
+        self.__buildUsername(padx, pady)
+        self.__buildApiKey(padx, pady)
+        self.__buildResultLocation(padx, pady)
+        self.__buildOverwriteCss(padx, pady)
+        
+        self.button = Button(self.bottomframe, text="Go", command=self.__generateResult, height=2, width=30, padx=padx, pady=pady)
+        self.button.pack(side=BOTTOM)    
+        
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def __buildUsername(self, padx, pady):
         self.label = Label(self.frame, text="User Name")
         self.label.grid(row=0, column=0, sticky=E, padx=padx, pady=pady)
             
@@ -85,8 +97,10 @@ class Gui(Tk):
             with open(constants.CONF_FILE_STEAM_USER, 'r') as myfile:
                 steamApiUser = myfile.read().replace('\n', '')        
             self.entry.insert(END, steamApiUser)
-        self.entry.grid(row=0, column=1, padx=padx, pady=pady)        
-    
+        self.entry.grid(row=0, column=1, padx=padx, pady=pady)
+        
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def __buildApiKey(self, padx, pady):
         self.apiKeyLabel = Label(self.frame, text="API Key")
         self.apiKeyLabel.grid(row=1, column=0, sticky=E, padx=padx, pady=pady)
         
@@ -96,7 +110,9 @@ class Gui(Tk):
                 steamApiKey = myfile.read().replace('\n', '')        
             self.apiKeyEntry.insert(END, steamApiKey)    
         self.apiKeyEntry.grid(row=1, column=1, padx=padx, pady=pady)
-    
+        
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def __buildResultLocation(self, padx, pady):
         self.resultLocationLabel = Label(self.frame, text="Result Location")
         self.resultLocationLabel.grid(row=2, column=0, sticky=E, padx=padx, pady=pady)
         
@@ -111,6 +127,9 @@ class Gui(Tk):
         self.resultLocationButton = Button(self.frame, text="...", command=self.__setResultLocation, height=1, width=1, padx=padx, pady=pady)
         self.resultLocationButton.grid(row=2, column=2, padx=padx, pady=pady)
         
-        self.button = Button(self.bottomframe, text="Go", command=self.__generateResult, height=2, width=30, padx=padx, pady=pady)
-        self.button.pack(side=BOTTOM)    
-    
+    ''' ------------------------------------------------------------------------------------------------ '''
+    def __buildOverwriteCss(self, padx, pady):
+        self.overwriteCssLabel = Label(self.frame, text="Overwrite CSS?")
+        self.overwriteCssLabel.grid(row=3, column=0, sticky=E, padx=padx, pady=pady)        
+        self.overwriteCss = Checkbutton(self.frame, justify=tkinter.LEFT)
+        self.overwriteCss.grid(row=3, column=1, sticky=W, padx=padx, pady=pady)
