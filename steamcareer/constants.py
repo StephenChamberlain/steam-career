@@ -20,3 +20,4 @@ USER_APP_DIR = appdirs.user_data_dir(APP_NAME, APP_AUTHOR, APP_VERSION, APP_ROAM
 CONF_FILE_STEAM_USER = USER_APP_DIR + '\\steam-user.conf'
 CONF_FILE_STEAM_API_KEY = USER_APP_DIR + '\\steam-api-key.conf'
 CONF_RESULT_LOCATION = USER_APP_DIR + '\\result-location.conf'
+OVERWRITE_CSS_LOCATION = USER_APP_DIR + '\\overwrite-css.conf'

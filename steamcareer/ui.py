@@ -13,7 +13,7 @@ import tkinter
 
 from steamcareer import constants
 from steamcareer import logic
-from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, W, E, messagebox, filedialog, StringVar, Checkbutton
+from tkinter import Tk, Frame, Entry, Label, Button, BOTTOM, END, W, E, messagebox, filedialog, StringVar, BooleanVar, Checkbutton
 
 class Gui(Tk):
     
@@ -60,9 +60,16 @@ class Gui(Tk):
                 
             os.makedirs(os.path.dirname(constants.CONF_RESULT_LOCATION), exist_ok=True)    
             with open(constants.CONF_RESULT_LOCATION, "wb") as f:
-                f.write(self.resultLocationEntry.get().encode("UTF-8"))                
+                f.write(self.resultLocationEntry.get().encode("UTF-8"))      
+
+            os.makedirs(os.path.dirname(constants.OVERWRITE_CSS_LOCATION), exist_ok=True)    
+            with open(constants.OVERWRITE_CSS_LOCATION, "wb") as f:
+                if (self.overwriteCssState.get()==True):
+                    f.write("true".encode("UTF-8"))
+                else:
+                    f.write("false".encode("UTF-8"))
             
-            logic.generateResultPage(self.apiKeyEntry.get(), self.entry.get(), self.resultLocationEntry.get())
+            logic.generateResultPage(self.apiKeyEntry.get(), self.entry.get(), self.resultLocationEntry.get(), self.overwriteCssState.get())
       
         except Exception as exception:            
             messagebox.showerror("Error", str(exception))                
@@ -120,7 +127,7 @@ class Gui(Tk):
         if os.path.isfile(constants.CONF_RESULT_LOCATION):
             with open(constants.CONF_RESULT_LOCATION, 'r') as myfile:
                 resultLocation = myfile.read().replace('\n', '')        
-            self.resultLocationEntry.insert(END, resultLocation)    
+            self.resultLocationEntry.insert(END, resultLocation)
         self.resultLocationEntry.grid(row=2, column=1, padx=padx, pady=pady)
         
         self.resultLocationButton = Button(self.frame, text="...", command=self.__setResultLocation, height=1, width=1, padx=padx, pady=pady)
@@ -129,6 +136,13 @@ class Gui(Tk):
     ''' ------------------------------------------------------------------------------------------------ '''
     def __buildOverwriteCss(self, padx, pady):
         self.overwriteCssLabel = Label(self.frame, text="Overwrite CSS?")
-        self.overwriteCssLabel.grid(row=3, column=0, sticky=E, padx=padx, pady=pady)        
-        self.overwriteCss = Checkbutton(self.frame, justify=tkinter.LEFT)
+        self.overwriteCssLabel.grid(row=3, column=0, sticky=E, padx=padx, pady=pady)
+        self.overwriteCssState = BooleanVar()
+        self.overwriteCss = Checkbutton(self.frame, justify=tkinter.LEFT, variable=self.overwriteCssState)
+        if os.path.isfile(constants.OVERWRITE_CSS_LOCATION):
+            with open(constants.OVERWRITE_CSS_LOCATION, 'r') as myfile:
+                if myfile.read().replace('\n', '') == 'true':
+                    self.overwriteCssState.set(True)
+                else:
+                    self.overwriteCssState.set(False)
         self.overwriteCss.grid(row=3, column=1, sticky=W, padx=padx, pady=pady)

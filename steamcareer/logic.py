@@ -51,14 +51,14 @@ def __openResultInSystemBrowser(resultPath):
         subprocess.call(('xdg-open', resultPath))
 
 ''' ------------------------------------------------------------------------------------------------ '''
-def generateResultPage(apiKey, userId, resultLocation):
+def generateResultPage(apiKey, userId, resultLocation, overwriteCss):
     print ("")    
     print ("Generating results page...")        
     
     steamapi.core.APIConnection(api_key=apiKey, validate_key=True)
     steam_user = steamapi.user.SteamUser(userurl=userId)    
     
-    __printSteamDataToConsole(steam_user)
+    '''__printSteamDataToConsole(steam_user)'''
     
     env = Environment(
         loader=PackageLoader("steamcareer"),
@@ -70,19 +70,20 @@ def generateResultPage(apiKey, userId, resultLocation):
     
     playerData = PlayerData(steam_user);
     
-    __copyStyleSheetToResultLocation(finalResultLocation)
+    __copyStyleSheetToResultLocation(finalResultLocation, overwriteCss)
     __generateTemplate(playerData, env, finalResultLocation, 'header.html')
     __generateTemplate(playerData, env, finalResultLocation, 'career.html')
     __openResultInSystemBrowser(__generateTemplate(playerData, env, finalResultLocation, 'index.html'))
     
 ''' ------------------------------------------------------------------------------------------------ '''
-def __copyStyleSheetToResultLocation(resultLocation):
+def __copyStyleSheetToResultLocation(resultLocation, overwriteCss):
     cssResultLocation = resultLocation / "styles.css"
-    if os.path.exists(cssResultLocation):
+    if os.path.exists(cssResultLocation) and not overwriteCss:
         print ("")
         print ("Not copying CSS stylesheet, " + str(cssResultLocation) + " already exists, user might have modified it")
     else:
-        copyfile("templates\\styles.css", cssResultLocation)    
+        copyfile("templates\\styles.css", cssResultLocation)
+        print ("Copied CSS stylesheet, " + str(cssResultLocation))    
     
 ''' ------------------------------------------------------------------------------------------------ '''
 def __generateTemplate(playerData, env, resultLocation, templatePath):
