@@ -16,7 +16,7 @@ class Test(unittest.TestCase):
     def test_APIConfigurationError(self):
         self.assertRaises(steamapi.errors.APIConfigurationError, 
                           logic.generateResultPage, 
-                          "invalidApiKey", "nonExistingUser", constants.USER_APP_DIR + "\\steam-career-tests")
+                          "invalidApiKey", "nonExistingUser", constants.USER_APP_DIR + "\\steam-career-tests", False)
         
 if __name__ == "__main__":
     unittest.main()
