@@ -14,6 +14,13 @@
 	<natures>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>steamcareer/templates/charts.html</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/steamcareer/templates/charts.html</locationURI>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1509196192202</id>

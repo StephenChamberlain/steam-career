@@ -61,8 +61,9 @@ def generateResultPage(apiKey, userId, resultLocation, overwriteCss):
     '''__printSteamDataToConsole(steam_user)'''
     
     env = Environment(
+        trim_blocks=True,
         loader=PackageLoader("steamcareer"),
-        autoescape=select_autoescape(['html', 'xml'])
+        autoescape=select_autoescape(['html', 'xml'])    
     )
     
     finalResultLocation = Path(resultLocation) / steam_user.name
@@ -71,8 +72,10 @@ def generateResultPage(apiKey, userId, resultLocation, overwriteCss):
     playerData = PlayerData(steam_user);
     
     __copyStyleSheetToResultLocation(finalResultLocation, overwriteCss)
+    # TODO: iterate over templates, don't add a line per template; but how to iterate over the env.loader?
     __generateTemplate(playerData, env, finalResultLocation, 'header.html')
     __generateTemplate(playerData, env, finalResultLocation, 'career.html')
+    __generateTemplate(playerData, env, finalResultLocation, 'charts.html')
     __openResultInSystemBrowser(__generateTemplate(playerData, env, finalResultLocation, 'index.html'))
     
 ''' ------------------------------------------------------------------------------------------------ '''

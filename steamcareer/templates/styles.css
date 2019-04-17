@@ -47,3 +47,11 @@ iframe {
 .never-played {
 	color: #20476F;
 }
+
+#piechart text {
+     fill: #C4C1BF !important;
+}
+
+#piechart svg > rect {
+    fill: #1B2838;
+}
