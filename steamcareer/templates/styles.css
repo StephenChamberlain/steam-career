@@ -30,6 +30,11 @@ iframe {
 	vertical-align: middle;
 }
 
+.header-link {
+	margin-left: 2em;
+	margin-right: 2em;	
+}
+
 .body {
 	background-color: #1B2838;
 	color: #98B8CB;
