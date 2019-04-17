@@ -1,4 +1,3 @@
-from steamcareer.playerData import PlayerData
 __author__ = 'Stephen Chamberlain'
 
 '''
@@ -14,6 +13,7 @@ import os
 import subprocess
 import steamapi
 
+from steamcareer.playerData import PlayerData
 from jinja2 import Environment, PackageLoader, select_autoescape
 from tkinter import sys  # TODO: shouldnt be any dependency on tkinter here!
 from shutil import copyfile
