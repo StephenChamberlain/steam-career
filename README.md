@@ -46,6 +46,7 @@ An example is given below.
 - Tkinter (UI).
 - Jinja2 (templating engine).
 - Pynsist (https://github.com/takluyver/pynsist installer).
+- Google charts.
 - Icon from http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html.
 
 ## Legal
