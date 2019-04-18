@@ -27,7 +27,8 @@
 {%- endmacro %} 
 
 {% macro game_name(game) -%}
-{{game.name | replace("™","&trade;") | replace("®","&reg;") | safe}} 
+<a href="https://store.steampowered.com/app/{{game.appid}}/" target="_blank">
+{{game.name | replace("™","&trade;") | replace("®","&reg;") | safe}}</a> 
 {%- endmacro %}
 
 <body class="body">
