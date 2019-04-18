@@ -15,11 +15,15 @@ img {
 	margin-right: auto;
 }
 
+.iframe-container {
+	overflow: hidden;
+}
+
 iframe {
     display: block;       /* iframes are inline by default */
     border: none;         /* Reset default border */
 	border-style: none;
-	overflow: hidden;    
+	overflow: hidden;
     width: 100vw;
 }
 

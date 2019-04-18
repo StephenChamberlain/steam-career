@@ -24,19 +24,29 @@
 	// Draw the chart and set the chart values
 	function drawChart() {
 		var data = google.visualization.arrayToDataTable([
-		  ['Game', 'Hours'],
+		  ['Game', 'Link', 'Hours'],
 		  {% for game in (playerData.games [:10]) %}
 		  {% if game.playtime_forever > 60 %}
-		  ['{{game_name(game)}}', {{(game.playtime_forever / 60) | abs | int}}],
+		  ['{{game_name(game)}}','https://store.steampowered.com/app/{{game.appid}}/', {{(game.playtime_forever / 60) | abs | int}}],
 		  {% endif %}
 		  {% endfor %}]);
+
+  		var view = new google.visualization.DataView(data);
+        view.setColumns([0, 2]);
 
 		// Optional; add a title and set the width and height of the chart
 		var options = {'title':'Time breakdown (Top 10)', 'width':800, 'height':600, is3D:true};
 
 		// Display the chart inside the <div> element with id="piechart"
 		var chart = new google.visualization.PieChart(document.getElementById('piechart'));		
-		chart.draw(data, options);
+		chart.draw(view, options);
+		
+        var selectHandler = function(e) {
+        	window.open(data.getValue(chart.getSelection()[0]['row'], 1), '_blank');
+        }
+        
+		// Add our selection handler.
+        google.visualization.events.addListener(chart, 'select', selectHandler);
 	}
 	</script> 
 </body>
