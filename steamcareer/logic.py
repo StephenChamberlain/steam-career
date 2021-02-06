@@ -75,7 +75,7 @@ def generateResultPage(apiKey, userId, resultLocation, overwriteCss):
     # TODO: iterate over templates, don't add a line per template; but how to iterate over the env.loader?
     __generateTemplate(playerData, env, finalResultLocation, 'header.html')
     __generateTemplate(playerData, env, finalResultLocation, 'career.html')
-    __generateTemplate(playerData, env, finalResultLocation, 'charts.html')
+    __generateTemplate(playerData, env, finalResultLocation, 'topten.html')
     __openResultInSystemBrowser(__generateTemplate(playerData, env, finalResultLocation, 'index.html'))
     
 ''' ------------------------------------------------------------------------------------------------ '''
