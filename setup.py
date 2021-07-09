@@ -26,6 +26,6 @@ setup(
     description = ("Experimental Python application which uses the Steam Web API to retrieve player data and present an overview in HTML form."),
     license = "MIT",
     url = "https://github.com/StephenChamberlain/steam-career",
-    packages=['steamcareer'],
+    packages=['steamcareer','steamcareertest'],
     long_description=read('README.md'),
 )
