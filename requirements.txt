@@ -7,4 +7,4 @@ idna==2.6
 appdirs==1.4.4
 
 -e git://github.com/StephenChamberlain/steamapi.git@master#egg=steamapi
--e git://github.com/StephenChamberlain/steam-career.git@master#egg=steamcareer
+-e git://github.com/StephenChamberlain/steam-career.git@master#egg=steam-career
