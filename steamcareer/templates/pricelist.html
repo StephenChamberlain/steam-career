@@ -12,17 +12,30 @@
 {{game.name | replace("™","&trade;") | replace("®","&reg;") | safe}}</a> 
 {%- endmacro %}
 
+{% macro game_price(game) -%}
+{% set price = playerData.price_map[game.id] %}
+{% if price == 'unknown' %}
+Unknown
+{% else %}
+{{format_price(playerData.price_map[game.id])}}
+{% endif %}
+{%- endmacro %}
+
+{% macro format_price(price) -%}
+{{"${:,.2f}".format(price)}}
+{%- endmacro %}
+
 <body class="body">
 	<div class="container">
         <p style="text-align: center">
-            Your collection is currently priced on Steam at TBD
+            On {{playerData.timestamp}} your collection was priced on Steam at {{format_price(playerData.total_value)}}
         </p>
         <hr>
         <table>
         {% for game in playerData.games %} 
             <tr>
                 <td>{{game_name(game)}}</td>
-                <td>TBD</td>
+                <td>{{game_price(game)}}</td>
             </tr>
         {% endfor %}
         </table>
