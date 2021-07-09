@@ -23,7 +23,6 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run unit tests
         run: |
-          cd steamcareer
           python -c "from steamcareer import *"
-          cd ../tests
+          cd tests
           python -m unittest tests
