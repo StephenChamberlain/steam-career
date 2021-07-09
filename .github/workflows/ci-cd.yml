@@ -1,4 +1,4 @@
-name: SteamCareer CI/CD
+name: build
 
 on: [push]
 
