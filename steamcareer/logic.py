@@ -76,6 +76,7 @@ def generateResultPage(apiKey, userId, resultLocation, overwriteCss):
     __generateTemplate(playerData, env, finalResultLocation, 'header.html')
     __generateTemplate(playerData, env, finalResultLocation, 'career.html')
     __generateTemplate(playerData, env, finalResultLocation, 'topten.html')
+    __generateTemplate(playerData, env, finalResultLocation, 'pricelist.html')
     __openResultInSystemBrowser(__generateTemplate(playerData, env, finalResultLocation, 'index.html'))
     
 ''' ------------------------------------------------------------------------------------------------ '''

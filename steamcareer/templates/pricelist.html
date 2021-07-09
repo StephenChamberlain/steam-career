@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Steam Career</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+{% macro game_name(game) -%}
+<a href="https://store.steampowered.com/app/{{game.appid}}/" target="_blank">
+{{game.name | replace("™","&trade;") | replace("®","&reg;") | safe}}</a> 
+{%- endmacro %}
+
+<body class="body">
+	<div class="container">
+        <p style="text-align: center">
+            Your collection is currently priced on Steam at TBD
+        </p>
+        <hr>
+        <table>
+        {% for game in playerData.games %} 
+            <tr>
+                <td>{{game_name(game)}}</td>
+                <td>TBD</td>
+            </tr>
+        {% endfor %}
+        </table>
+	</div>
+</body>
+</html>        
