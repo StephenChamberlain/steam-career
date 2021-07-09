@@ -1,4 +1,4 @@
-requests==2.20.0
+requests==2.25.1 
 Jinja2==2.11.3
 urllib3==1.26.5
 chardet==3.0.4
@@ -7,4 +7,3 @@ idna==2.6
 appdirs==1.4.4
 
 -e git://github.com/StephenChamberlain/steamapi.git@master#egg=steamapi
--e git://github.com/StephenChamberlain/steam-career.git@master#egg=steamcareer
