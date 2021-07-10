@@ -44,7 +44,7 @@ class PlayerData(object):
                 gameids.append(str(game.id))
             appids = ",".join(gameids)
             response = requests.get(f"http://store.steampowered.com/api/appdetails?appids={appids}&filters=price_overview")
-            print(response.text)
+            #print(response.text)
             data = json.loads(response.text)
             first = True
             for key in data.keys():
@@ -60,7 +60,7 @@ class PlayerData(object):
                     self.total_value += price
                 except Exception as exception:
                     # TODO: game is part of a collection, or price is located elsewhere?
-                    print(f"Exception requesting price information for app {key}")
+                    #print(f"Exception requesting price information for app {key}")
                     self.price_map[int(key)] = 'unknown'
         except Exception as exception:
             print("General exception when requesting price information")
