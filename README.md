@@ -5,7 +5,7 @@ form.
 
 ## Instructions
 1. Log in to steam and generate an API key (see https://steamcommunity.com/dev/apikey).
-2. Install the tool (https://github.com/StephenChamberlain/steam-career/releases/download/v1.1/Steam_Career_1.1.exe)
+2. Install the tool (https://github.com/StephenChamberlain/steam-career/releases)
 3. Provide the steam user ID of the player to generate results for, the API key you
 defined in step 1 and the output location for the results and click "Go". You can
 also optionally choose to force overwrite the CSS in the resulting location (see 
@@ -51,7 +51,7 @@ An example is given below.
 | Jinja2 | Templating engine | https://docs.python.org/3/library/tkinter.html |
 | Google charts | Top 10 view | https://developers.google.com/chart |
 | Babel | Currency information | http://babel.pocoo.org/en/latest/ |
-| pytz | Dependend on by Babel | https://pypi.org/project/pytz/ |
+| pytz | Babel dependency | https://pypi.org/project/pytz/ |
 | Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
 | Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
 | NSIS 3.06.1 | NSIS installer engine | https://nsis.sourceforge.io/Main_Page |
