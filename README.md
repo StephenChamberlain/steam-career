@@ -31,23 +31,28 @@ project for more information on the available functionality from the 'game' and
 ## Result
 If all goes well, the application will generate output in HTML form. 
 An example is given below.
-![Resulting HTML file](/docs/result1.png?raw=true)
-![Resulting HTML file](/docs/result2.png?raw=true)
-![Resulting HTML file](/docs/result3.png?raw=true)
+![Top most played](/docs/result1.png?raw=true)
+![Hours played](/docs/result2.png?raw=true)
+![Top 10](/docs/result3.png?raw=true)
+![Price list](/docs/result4.png?raw=true)
 
 ## Environment
 - Github.
-- Eclipse (Oxygen.1a Release (4.7.1a)) with PyDev installed.
+- Microsoft Visual Code with pylance OR Eclipse (Oxygen.1a Release (4.7.1a)) with PyDev installed
 - Python (3.6.3).
-- Travis CI.
+- Github Actions (CI/CD).
 
 ## Components
-- Steamapi (https://github.com/StephenChamberlain/steamapi forked from https://github.com/smiley/steamapi).
-- Tkinter (UI).
-- Jinja2 (templating engine).
-- Pynsist (https://github.com/takluyver/pynsist installer).
-- Google charts.
-- Icon from http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html.
+| Name     | Purpose      |  Link |
+|:---------|:-------------|------:|
+| Steamapi | Backend API, contains player and game information | https://github.com/StephenChamberlain/steamapi forked from https://github.com/smiley/steamapi |
+| Steam Web API | Frontend API, store information | https://partner.steamgames.com/doc/webapi_overview |
+| Tkinter | GUI | https://docs.python.org/3/library/tkinter.html |
+| Jinja2 | Templating engine | https://docs.python.org/3/library/tkinter.html |
+| Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
+| Google charts | Top 10 view | https://developers.google.com/chart |
+| Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
+| Babel | Currency information | http://babel.pocoo.org/en/latest/ |
 
 ## Legal
 This project is not endorsed in any way by Valve Corporation.
