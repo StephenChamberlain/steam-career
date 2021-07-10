@@ -22,7 +22,7 @@ Unknown
 {%- endmacro %}
 
 {% macro format_price(price) -%}
-{{"${:,.2f}".format(price)}}
+{{playerData.currency_char}}{{"{:,.2f}".format(price)}}
 {%- endmacro %}
 
 <body class="body">

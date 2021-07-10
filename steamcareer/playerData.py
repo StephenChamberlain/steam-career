@@ -6,7 +6,7 @@ Holds player data so that necessary data processing can happen in one place and 
 @author: Stephen
 '''
 
-import datetime, requests, json, babel.numbers, locale
+import datetime, requests, json, babel.numbers
 
 class PlayerData(object):
     
@@ -70,4 +70,4 @@ class PlayerData(object):
         # TODO: this needs some boundary checks, what if total is less than 1 euro? or 0?
         self.total_value = float(str(self.total_value)[:-2] + '.' + str(self.total_value)[-2:])
 
-       # self.currency_char = babel.numbers.get_currency_symbol(self.currency_code, locale.getdefaultlocale)
+        self.currency_char = babel.numbers.get_currency_symbol(self.currency_code, locale='en_US')
