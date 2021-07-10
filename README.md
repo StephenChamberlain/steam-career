@@ -49,10 +49,11 @@ An example is given below.
 | Steam Web API | Frontend API, store information | https://partner.steamgames.com/doc/webapi_overview |
 | Tkinter | GUI | https://docs.python.org/3/library/tkinter.html |
 | Jinja2 | Templating engine | https://docs.python.org/3/library/tkinter.html |
-| Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
 | Google charts | Top 10 view | https://developers.google.com/chart |
-| Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
 | Babel | Currency information | http://babel.pocoo.org/en/latest/ |
+| Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
+| Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
+| NSIS | NSIS installer engine | https://nsis.sourceforge.io/Main_Page |
 
 ## Legal
 This project is not endorsed in any way by Valve Corporation.
