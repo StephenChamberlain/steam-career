@@ -53,7 +53,7 @@ An example is given below.
 | Babel | Currency information | http://babel.pocoo.org/en/latest/ |
 | Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
 | Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
-| NSIS | NSIS installer engine | https://nsis.sourceforge.io/Main_Page |
+| NSIS 3.06.1 | NSIS installer engine | https://nsis.sourceforge.io/Main_Page |
 
 ## Legal
 This project is not endorsed in any way by Valve Corporation.

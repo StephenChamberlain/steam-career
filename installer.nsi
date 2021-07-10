@@ -1,3 +1,5 @@
+Unicode True
+
 !define PRODUCT_NAME "[[ib.appname]]"
 !define PRODUCT_VERSION "[[ib.version]]"
 !define PY_VERSION "[[ib.py_version]]"
