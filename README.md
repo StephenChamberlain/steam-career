@@ -51,6 +51,7 @@ An example is given below.
 | Jinja2 | Templating engine | https://docs.python.org/3/library/tkinter.html |
 | Google charts | Top 10 view | https://developers.google.com/chart |
 | Babel | Currency information | http://babel.pocoo.org/en/latest/ |
+| pytz | Dependend on by Babel | https://pypi.org/project/pytz/ |
 | Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
 | Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
 | NSIS 3.06.1 | NSIS installer engine | https://nsis.sourceforge.io/Main_Page |
