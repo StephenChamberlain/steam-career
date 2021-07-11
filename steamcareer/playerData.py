@@ -59,7 +59,8 @@ class PlayerData(object):
                     self.price_map[int(key)] = price_str
                     self.total_value += price
                 except Exception as exception:
-                    # TODO: game is part of a collection, or price is located elsewhere?
+                    # TODO: game is part of a collection, no longer sold on Steam or some other issue. Look up again by without "filters" 
+                    # attribute in order to provide a better explanation as to why we have no price.
                     #print(f"Exception requesting price information for app {key}")
                     self.price_map[int(key)] = 'unknown'
         except Exception as exception:
@@ -67,7 +68,8 @@ class PlayerData(object):
             self.price_map = {}
             self.total_value = 0
         
-        # TODO: this needs some boundary checks, what if total is less than 1 euro? or 0?
+        # What if total is less than 1 euro? or 0?
+        # Tested with friends account; handled by Python implicitly, results in 0.00 being displayed
         self.total_value = float(str(self.total_value)[:-2] + '.' + str(self.total_value)[-2:])
 
         self.currency_char = babel.numbers.get_currency_symbol(self.currency_code, locale='en_US')
