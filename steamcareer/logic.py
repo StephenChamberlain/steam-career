@@ -14,7 +14,7 @@ import subprocess
 import steamapi
 
 from steamcareer.playerData import PlayerData
-from jinja2 import Environment, PackageLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from tkinter import sys  # TODO: shouldnt be any dependency on tkinter here!
 from shutil import copyfile
 from pathlib import Path
@@ -56,26 +56,25 @@ def generateResultPage(apiKey, userId, resultLocation, overwriteCss):
     print ("Generating results page...")        
     
     steamapi.core.APIConnection(api_key=apiKey, validate_key=True)
-    steam_user = steamapi.user.SteamUser(userurl=userId)    
+    steam_user = steamapi.user.SteamUser(userurl=userId)
     
     '''__printSteamDataToConsole(steam_user)'''
     
     env = Environment(
         trim_blocks=True,
-        loader=PackageLoader("steamcareer"),
-        autoescape=select_autoescape(['html', 'xml'])    
+        loader=FileSystemLoader(searchpath="./templates"),
+        autoescape=select_autoescape(['html', 'xml'])
     )
     
     finalResultLocation = Path(resultLocation) / steam_user.name
     finalResultLocation.mkdir(exist_ok=True) 
     
-    playerData = PlayerData(steam_user);
-    
+    playerData = PlayerData(steam_user)
+
     __copyStyleSheetToResultLocation(finalResultLocation, overwriteCss)
-    # TODO: iterate over templates, don't add a line per template; but how to iterate over the env.loader?
-    __generateTemplate(playerData, env, finalResultLocation, 'header.html')
-    __generateTemplate(playerData, env, finalResultLocation, 'career.html')
-    __generateTemplate(playerData, env, finalResultLocation, 'topten.html')
+    for file in os.listdir("templates"):
+        __generateTemplate(playerData, env, finalResultLocation, file)
+
     __openResultInSystemBrowser(__generateTemplate(playerData, env, finalResultLocation, 'index.html'))
     
 ''' ------------------------------------------------------------------------------------------------ '''

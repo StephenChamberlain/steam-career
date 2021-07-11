@@ -1,11 +1,11 @@
 Steam Career [![Build Status](https://github.com/StephenChamberlain/steam-career/actions/workflows/ci-cd.yml/badge.svg)](https://travis-ci.com/StephenChamberlain/steam-career) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ========
-Experimental Python application which uses the Steam Web API to retrieve player data and present an overview in HTML 
+Python application which uses the Steam Web API to retrieve player data and present an overview in HTML 
 form.
 
 ## Instructions
 1. Log in to steam and generate an API key (see https://steamcommunity.com/dev/apikey).
-2. Install the tool (https://github.com/StephenChamberlain/steam-career/releases/download/v1.1/Steam_Career_1.1.exe)
+2. Install the tool (https://github.com/StephenChamberlain/steam-career/releases)
 3. Provide the steam user ID of the player to generate results for, the API key you
 defined in step 1 and the output location for the results and click "Go". You can
 also optionally choose to force overwrite the CSS in the resulting location (see 
@@ -31,23 +31,30 @@ project for more information on the available functionality from the 'game' and
 ## Result
 If all goes well, the application will generate output in HTML form. 
 An example is given below.
-![Resulting HTML file](/docs/result1.png?raw=true)
-![Resulting HTML file](/docs/result2.png?raw=true)
-![Resulting HTML file](/docs/result3.png?raw=true)
+![Top most played](/docs/result1.png?raw=true)
+![Hours played](/docs/result2.png?raw=true)
+![Top 10](/docs/result3.png?raw=true)
+![Price list](/docs/result4.png?raw=true)
 
 ## Environment
 - Github.
-- Eclipse (Oxygen.1a Release (4.7.1a)) with PyDev installed.
+- Microsoft Visual Code with pylance OR Eclipse (Oxygen.1a Release (4.7.1a)) with PyDev installed
 - Python (3.6.3).
-- Travis CI.
+- Github Actions (CI/CD).
 
 ## Components
-- Steamapi (https://github.com/StephenChamberlain/steamapi forked from https://github.com/smiley/steamapi).
-- Tkinter (UI).
-- Jinja2 (templating engine).
-- Pynsist (https://github.com/takluyver/pynsist installer).
-- Google charts.
-- Icon from http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html.
+| Name     | Purpose      |  Link |
+|:---------|:-------------|------:|
+| Steamapi | Backend API, contains player and game information | https://github.com/StephenChamberlain/steamapi forked from https://github.com/smiley/steamapi |
+| Steam Web API | Frontend API, store information | https://partner.steamgames.com/doc/webapi_overview |
+| Tkinter | GUI | https://docs.python.org/3/library/tkinter.html |
+| Jinja2 | Templating engine | https://docs.python.org/3/library/tkinter.html |
+| Google charts | Top 10 view | https://developers.google.com/chart |
+| Babel | Currency information | http://babel.pocoo.org/en/latest/ |
+| pytz | Babel dependency | https://pypi.org/project/pytz/ |
+| Icon | Used in GUI | http://www.veryicon.com/icons/internet--web/modern-web/steam-7.html |
+| Pynsist | NSIS installer for Python | https://github.com/takluyver/pynsist |
+| NSIS 3.06.1 | NSIS installer engine | https://nsis.sourceforge.io/Main_Page |
 
 ## Legal
 This project is not endorsed in any way by Valve Corporation.
